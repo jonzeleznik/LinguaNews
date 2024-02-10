@@ -1,0 +1,26 @@
+---
+# https://taskfile.dev
+version: '3'
+
+tasks:
+  install:
+    desc: Install dependecies needed for this to run
+    cmds:
+      - npm install
+      - go get github.com/gocolly/colly
+      - go mod tidy
+  assets: 
+    desc: Build assets
+    cmds:
+      - npx tailwindcss -i ./internal/assets/tailwind.css -o ./internal/assets/dist/styles.css
+  generate:
+    desc: Generates stuff and things
+    cmds:
+      - templ generate
+  dev:
+    desc: Run the application
+    deps:
+      - generate
+      - assets
+    cmds: 
+      - go run ./cmd/web/main.go 

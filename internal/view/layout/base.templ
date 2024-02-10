@@ -1,0 +1,20 @@
+package layout
+
+templ Base() {
+    <!doctype html>
+    <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+
+		<link rel="icon" type="image/svg+xml" href="dist/favicon.svg" sizes="any" />
+        <link rel="stylesheet" href="dist/styles.css" />
+
+		<title>Tutorial</title>
+	</head>
+	<body class="font-sans bg-light-bg dark:bg-dark-bg dark:text-dark-secondary">
+        { children... }
+	</body>
+</html>
+}
