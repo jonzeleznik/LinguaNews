@@ -13,14 +13,19 @@ tasks:
     desc: Build assets
     cmds:
       - npx tailwindcss -i ./internal/assets/tailwind.css -o ./internal/assets/dist/styles.css
-  generate:
+  templ:
     desc: Generates stuff and things
     cmds:
       - templ generate
+  generate:
+    desc: Generates stuff and things
+    deps:
+      - templ
+      - assets
   dev:
     desc: Run the application
     deps:
-      - generate
+      - templ
       - assets
     cmds: 
       - go run ./cmd/web/main.go 

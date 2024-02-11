@@ -1,20 +1,28 @@
 package layout
 
+import (
+	"web-scrape/internal/view/components"
+)
+
 templ Base() {
     <!doctype html>
     <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="description" content="Astro description" />
+			<meta name="viewport" content="width=device-width" />
 
-		<link rel="icon" type="image/svg+xml" href="dist/favicon.svg" sizes="any" />
-        <link rel="stylesheet" href="dist/styles.css" />
+			<link rel="icon" type="image/svg+xml" href="dist/favicon.svg" sizes="any" />
+			<link rel="stylesheet" href="dist/styles.css" />
+			<script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
 
-		<title>Tutorial</title>
-	</head>
-	<body class="font-sans bg-light-bg dark:bg-dark-bg dark:text-dark-secondary">
-        { children... }
-	</body>
-</html>
+			<title>Tutorial</title>
+		</head>
+		<body class="font-sans bg-light-bg dark:bg-dark-bg dark:text-dark-secondary">
+			@components.Header()
+			<div class="w-full pt-10 mt-24 max-md:mt-18 mb-12 px-5 xl:px-60 2xl:px-96">
+				{ children... }
+			</div>
+		</body>
+	</html>
 }

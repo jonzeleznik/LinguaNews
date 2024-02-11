@@ -59,7 +59,7 @@ func ChatGpt(article string) (respone, error) {
 		return body, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+"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")
+	req.Header.Set("Authorization", "Bearer "+"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")
 	resp, err := client.Do(req)
 	if err != nil {
 		return body, err

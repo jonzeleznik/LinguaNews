@@ -12,7 +12,7 @@ func main() {
 	app.Static("/dist", "internal/assets/dist")
 
 	userHandler := handler.UserHandler{}
-	app.GET("/user", userHandler.HandleUserShow)
+	app.GET("/home", userHandler.HandleUserShow)
 
 	app.Start(":3000")
 }

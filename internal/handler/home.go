@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"web-scrape/internal/view/user"
+	"web-scrape/internal/view/pages"
 
 	"github.com/labstack/echo/v4"
 )
@@ -9,5 +9,5 @@ import (
 type UserHandler struct{}
 
 func (h UserHandler) HandleUserShow(c echo.Context) error {
-	return render(c, user.Show())
+	return render(c, pages.Home())
 }
