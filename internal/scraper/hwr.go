@@ -25,14 +25,14 @@ func HwrScrapeMoveiPosts() []HWRPost {
 	})
 
 	c.OnHTML("div.story", func(e *colly.HTMLElement) {
-		if i <= 1 {
+		if i <= 2 {
 			post := HWRPost{}
 
 			post.Url = e.ChildAttr("a", "href")
 			post.Title = e.ChildText("h3")
 
 			// To bypass "Too Many Requests" ERROR
-			time.Sleep(3 * time.Second)
+			time.Sleep(1 * time.Second)
 			post.Content = HwrScrapePostContent(post.Url)
 
 			hwrMoveiPosts = append(hwrMoveiPosts, post)

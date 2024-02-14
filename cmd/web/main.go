@@ -11,8 +11,9 @@ func main() {
 
 	app.Static("/dist", "internal/assets/dist")
 
-	userHandler := handler.UserHandler{}
-	app.GET("/home", userHandler.HandleUserShow)
+	homeHandler := handler.HomeHandler{}
+	app.GET("/home", homeHandler.HandleHomeShow)
+	app.POST("/get-info", homeHandler.HandleButtonClick)
 
 	app.Start(":3000")
 }

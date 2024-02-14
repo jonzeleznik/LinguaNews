@@ -2,10 +2,22 @@ package pages
 
 import (
 	"web-scrape/internal/view/layout"
+	"web-scrape/internal/scraper"
 )
 
-templ Home() {
+templ Home(posts []scraper.HWRPost) {
 	@layout.Base() {
-		<h1>Home page</h1>
+		<div id="content">
+			for _, item := range posts {
+				<button
+					type="submit"
+					name="text"
+					value={ item.Content }
+					hx-post="/get-info"
+					hx-target="#content"
+					hx-swap="outerHTML"
+				>{ item.Title }</button>
+			}
+		</div>
 	}
 }
