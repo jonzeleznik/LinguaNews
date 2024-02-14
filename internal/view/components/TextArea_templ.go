@@ -23,7 +23,7 @@ func TextArea(text string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form><div class=\"w-full mb-4 border border-gray-200 rounded-lg bg-gray-700 border-gray-600\"><div class=\"px-4 py-2 rounded-t-lg bg-gray-800\"><textarea id=\"text\" rows=\"4\" name=\"text\" class=\"w-full px-0 text-sm text-gray-900 border-0 bg-gray-800 focus:ring-0 text-white placeholder-gray-400\" placeholder=\"Write some text ...\" required>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form><div class=\"w-full mb-4 border border-gray-200 rounded-lg bg-gray-700 border-gray-600\"><div class=\"px-4 py-2 rounded-t-lg bg-gray-800\"><textarea id=\"text\" rows=\"30\" name=\"text\" class=\"w-full px-0 text-sm text-gray-900 border-0 bg-gray-800 focus:ring-0 text-white placeholder-gray-400\" placeholder=\"Write some text ...\" required>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
