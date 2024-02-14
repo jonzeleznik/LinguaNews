@@ -6,15 +6,17 @@ tasks:
   install:
     desc: Install dependecies needed for this to run
     cmds:
-      - npm install
+      - go install github.com/a-h/templ/cmd/templ@latest
       - go get github.com/gocolly/colly
+      - go get github.com/labstack/echo/v4
       - go mod tidy
+      - npm install
   assets: 
     desc: Build assets
     cmds:
       - npx tailwindcss -i ./internal/assets/tailwind.css -o ./internal/assets/dist/styles.css
   templ:
-    desc: Generates stuff and things
+    desc: Renders templ files
     cmds:
       - templ generate
   generate:
