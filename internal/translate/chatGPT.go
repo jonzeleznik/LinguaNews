@@ -1,4 +1,4 @@
-package gpt
+package translate
 
 import (
 	"bytes"
@@ -6,6 +6,8 @@ import (
 	"io"
 	"net/http"
 )
+
+const api_token = ""
 
 type payload struct {
 	Model    string `json:"model"`
@@ -46,6 +48,10 @@ func ChatGpt(article string) (respone, error) {
 				Role:    "user",
 				Content: article,
 			},
+			{
+				Role:    "user",
+				Content: "Translate further.",
+			},
 		},
 	}
 
@@ -59,7 +65,7 @@ func ChatGpt(article string) (respone, error) {
 		return body, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+"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")
+	req.Header.Set("Authorization", "Bearer "+api_token)
 	resp, err := client.Do(req)
 	if err != nil {
 		return body, err

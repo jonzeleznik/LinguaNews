@@ -2,6 +2,7 @@ package handler
 
 import (
 	"web-scrape/internal/scraper"
+	"web-scrape/internal/translate"
 	"web-scrape/internal/view/components"
 	"web-scrape/internal/view/pages"
 
@@ -17,5 +18,9 @@ func (h HomeHandler) HandleHomeShow(c echo.Context) error {
 
 func (h HomeHandler) HandleButtonClick(c echo.Context) error {
 	text := c.FormValue("text")
-	return render(c, components.TextArea(text))
+	translated, err := translate.ChatGpt(text)
+	if err != nil {
+		return render(c, components.ErrorCard("ERROR accured when translating!", err.Error()))
+	}
+	return render(c, components.TextArea(translated.Choices[0].Message.Content))
 }

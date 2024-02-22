@@ -23,20 +23,20 @@ func TextArea(text string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form><div class=\"w-full mb-4 border border-gray-200 rounded-lg bg-gray-700 border-gray-600\"><div class=\"px-4 py-2 rounded-t-lg bg-gray-800\"><textarea id=\"text\" rows=\"30\" name=\"text\" class=\"w-full px-0 text-sm text-gray-900 border-0 bg-gray-800 focus:ring-0 text-white placeholder-gray-400\" placeholder=\"Write some text ...\" required>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full mb-4 border border-gray-200 rounded-lg bg-gray-700 border-gray-600\"><div class=\"px-4 py-2 rounded-t-lg bg-gray-800\"><textarea id=\"text\" rows=\"30\" class=\"w-full px-0 text-sm text-gray-900 border-0 bg-gray-800 focus:ring-0 text-white placeholder-gray-400\" placeholder=\"Write some text ...\" required>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(text)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/view/components/TextArea.templ`, Line: 13, Col: 11}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/view/components/TextArea.templ`, Line: 11, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</textarea></div><div class=\"flex items-center justify-between px-3 py-2 border-t border-gray-600\"><button type=\"submit\" class=\"inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-900 hover:bg-dark-accent\">Post Blog</button></div></div></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</textarea></div><div class=\"flex items-center justify-between px-3 py-2 border-t border-gray-600\"><button onclick=\"copyToClipboard()\" class=\"inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-900 hover:bg-dark-accent\">Copy Text</button></div></div><script>\n\t\tfunction copyToClipboard() {\n\t\t\tvar copyText = document.getElementById(\"text\");\n\n\t\t\tcopyText.select();\n\t\t\tcopyText.setSelectionRange(0, 99999);\n\n\t\t\tnavigator.clipboard.writeText(copyText.value);\n\t\t\talert(\"Copied the text!\");\n\t\t} \n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
