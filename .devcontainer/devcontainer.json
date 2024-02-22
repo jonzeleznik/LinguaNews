@@ -9,7 +9,11 @@
 	"features": {
 		"ghcr.io/eitsupi/devcontainer-features/go-task:1": {},
 		"ghcr.io/devcontainers/features/node:1": {}
-	}
+	},
+	"vscode": {
+		// Add the IDs of extensions you want installed when the container is created.
+		"extensions": ["a-h.templ", "golang.go", "bradlc.vscode-tailwindcss"]
+	  }
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
