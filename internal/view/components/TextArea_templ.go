@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-func TextArea(text string) templ.Component {
+func TextArea(title, text string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -23,20 +23,33 @@ func TextArea(text string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full mb-4 border border-gray-200 rounded-lg bg-gray-700 border-gray-600\"><div class=\"px-4 py-2 rounded-t-lg bg-gray-800\"><textarea id=\"text\" rows=\"30\" class=\"w-full px-0 text-sm text-gray-900 border-0 bg-gray-800 focus:ring-0 text-white placeholder-gray-400\" placeholder=\"Write some text ...\" required>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full\"><h2 class=\"text-lg font-bold\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(text)
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/view/components/TextArea.templ`, Line: 11, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/view/components/TextArea.templ`, Line: 4, Col: 37}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</textarea></div><div class=\"flex items-center justify-between px-3 py-2 border-t border-gray-600\"><button onclick=\"copyToClipboard()\" class=\"inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-900 hover:bg-dark-accent\">Copy Text</button></div></div><script>\n\t\tfunction copyToClipboard() {\n\t\t\tvar copyText = document.getElementById(\"text\");\n\n\t\t\tcopyText.select();\n\t\t\tcopyText.setSelectionRange(0, 99999);\n\n\t\t\tnavigator.clipboard.writeText(copyText.value);\n\t\t\talert(\"Copied the text!\");\n\t\t} \n\t</script>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h2><div class=\"relative bg-gray-50 rounded-lg dark:bg-gray-700 p-4 h-64\"><div class=\"overflow-scroll max-h-full\"><p id=\"text\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(text)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/view/components/TextArea.templ`, Line: 7, Col: 23}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><div class=\"absolute top-2 end-2 bg-gray-50 dark:bg-gray-700\"><button onclick=\"copyToClipboard(&#39;text&#39;)\" class=\"text-gray-900 dark:text-gray-400 m-0.5 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 rounded-lg py-2 px-2.5 inline-flex items-center justify-center bg-white border-gray-200 border\"><span id=\"default-message\" class=\"inline-flex items-center\"><svg class=\"w-3 h-3 me-1.5\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 18 20\"><path d=\"M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z\"></path></svg> <span class=\"text-xs font-semibold\">Copy text</span></span></button></div></div></div><script>\n\t\tfunction copyToClipboard(elementID) {\n\t\t\tcopyText = document.getElementById(elementID).innerHTML;\n\n\t\t\tnavigator.clipboard.writeText(copyText);\n\t\t\talert(\"Copied the text!\");\n\t\t} \n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
