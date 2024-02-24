@@ -3,6 +3,7 @@ package translate
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -30,7 +31,7 @@ type respone struct {
 	} `json:"choices"`
 }
 
-func ChatGpt(article string) (respone, error) {
+func ChatGpt(title, description, content string) (respone, error) {
 	var body respone
 	client := &http.Client{}
 
@@ -42,11 +43,11 @@ func ChatGpt(article string) (respone, error) {
 		}{
 			{
 				Role:    "system",
-				Content: "You are an assistant that rewrites English articles and translates them into Slovenian",
+				Content: "You are an assistant that rewrites English articles and translates them into Slovenian. The articles are about movie industry and new releases.",
 			},
 			{
 				Role:    "user",
-				Content: article,
+				Content: fmt.Sprintf("Title: %s \nDescription: %s \nContent: %s", title, description, content),
 			},
 			{
 				Role:    "user",
