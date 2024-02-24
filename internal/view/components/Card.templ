@@ -1,14 +1,26 @@
 package components
 
-templ Card(title, content, url string) {
-	<div>
-		<div class="flex items-center justify-between mb-4">
-			<p class="leading-none text-white text-lg">{ title }</p>
-			<span class="inline-flex">
+templ Card(title, image, url, desc, index string) {
+	<section
+		class="grid md:grid-cols-3 gap-4 pb-3 mb-3 border-b dark:border-dark-accent"
+	>
+		<div>
+			<img
+				class="object-cover md:h-36 md:w-72"
+				src={ image }
+				alt="slikca"
+			/>
+		</div>
+		<div class="md:col-span-2">
+			<h2 class="text-xl">{ title }</h2>
+			<p>
+				{ desc }
+			</p>
+			<div class="inline-flex">
 				<button
 					type="submit"
 					name="text"
-					value={ content }
+					value={ index }
 					hx-post="/get-info"
 					hx-target="#content"
 					hx-swap="outerHTML"
@@ -42,7 +54,7 @@ templ Card(title, content, url string) {
 						></path>
 					</svg>
 				</a>
-			</span>
+			</div>
 		</div>
-	</div>
+	</section>
 }

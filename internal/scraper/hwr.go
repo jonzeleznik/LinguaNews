@@ -9,9 +9,11 @@ import (
 )
 
 type HWRPost struct {
-	Url     string
-	Title   string
-	Content string
+	Url         string
+	Image_url   string
+	Title       string
+	Description string
+	Content     string
 }
 
 func HwrScrapeMoveiPosts() []HWRPost {
@@ -33,7 +35,9 @@ func HwrScrapeMoveiPosts() []HWRPost {
 
 			// To bypass "Too Many Requests" ERROR
 			time.Sleep(1 * time.Second)
-			post.Content = HwrScrapePostContent(post.Url)
+			post.Content,
+				post.Description,
+				post.Image_url = HwrScrapePostContent(post.Url)
 
 			hwrMoveiPosts = append(hwrMoveiPosts, post)
 			i++
@@ -45,8 +49,10 @@ func HwrScrapeMoveiPosts() []HWRPost {
 	return hwrMoveiPosts
 }
 
-func HwrScrapePostContent(target string) string {
+func HwrScrapePostContent(target string) (string, string, string) {
 	var content []string
+	var description string
+	var image string
 
 	c := colly.NewCollector()
 
@@ -61,7 +67,17 @@ func HwrScrapePostContent(target string) string {
 		content = append(content, paragraph)
 	})
 
+	c.OnHTML("p.article-excerpt", func(e *colly.HTMLElement) {
+		description = e.Text
+	})
+
+	c.OnHTML("div.featured-image", func(e *colly.HTMLElement) {
+		image = e.ChildAttr("img", "src")
+	})
+
 	c.Visit(target)
 
-	return strings.Replace(strings.Join(content[:], ""), "\n", "", -1)
+	return strings.Replace(strings.Join(content[:], ""), "\n", "", -1),
+		description,
+		image
 }

@@ -1,6 +1,7 @@
 package pages
 
 import (
+	"strconv"
 	"web-scrape/internal/view/layout"
 	"web-scrape/internal/scraper"
 	"web-scrape/internal/view/components"
@@ -9,8 +10,8 @@ import (
 templ Home(posts []scraper.HWRPost) {
 	@layout.Base() {
 		<div id="content">
-			for _, item := range posts {
-				@components.Card(item.Title, item.Content, item.Url)
+			for i, item := range posts {
+				@components.Card(item.Title, item.Image_url, item.Url, item.Description, strconv.Itoa(i))
 			}
 		</div>
 	}
