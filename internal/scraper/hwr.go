@@ -8,16 +8,8 @@ import (
 	"github.com/gocolly/colly"
 )
 
-type HWRPost struct {
-	Url         string
-	Image_url   string
-	Title       string
-	Description string
-	Content     string
-}
-
-func HwrScrapeMoveiPosts() []HWRPost {
-	var hwrMoveiPosts []HWRPost
+func HwrScrapeMoveiPosts() []Post {
+	var hwrMoveiPosts []Post
 	i := 0
 
 	c := colly.NewCollector()
@@ -28,7 +20,7 @@ func HwrScrapeMoveiPosts() []HWRPost {
 
 	c.OnHTML("div.story", func(e *colly.HTMLElement) {
 		if i <= 2 {
-			post := HWRPost{}
+			post := Post{}
 
 			post.Url = e.ChildAttr("a", "href")
 			post.Title = e.ChildText("h3")
@@ -38,6 +30,8 @@ func HwrScrapeMoveiPosts() []HWRPost {
 			post.Content,
 				post.Description,
 				post.Image_url = HwrScrapePostContent(post.Url)
+			post.Source = "HWR"
+			post.Date = time.Now()
 
 			hwrMoveiPosts = append(hwrMoveiPosts, post)
 			i++

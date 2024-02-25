@@ -12,7 +12,7 @@ import (
 
 type HomeHandler struct{}
 
-var posts []scraper.HWRPost
+var posts []scraper.Post
 
 func (h HomeHandler) HandleHomeShow(c echo.Context) error {
 	posts = scraper.HwrScrapeMoveiPosts()

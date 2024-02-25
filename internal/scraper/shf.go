@@ -8,8 +8,8 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func ShfScrapeMoveiPosts() []HWRPost {
-	var hwrMoveiPosts []HWRPost
+func ShfScrapeMoveiPosts() []Post {
+	var hwrMoveiPosts []Post
 	i := 0
 
 	c := colly.NewCollector()
@@ -20,7 +20,7 @@ func ShfScrapeMoveiPosts() []HWRPost {
 
 	c.OnHTML("div.article-description", func(e *colly.HTMLElement) {
 		if i <= 3 {
-			post := HWRPost{}
+			post := Post{}
 
 			post.Url = "https://www.slashfilm.com/" + e.ChildAttr("a", "href")
 			post.Title = e.ChildText("h3")
