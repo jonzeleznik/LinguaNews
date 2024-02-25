@@ -3,24 +3,63 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"web-scrape/internal/db"
+	"web-scrape/internal/scraper"
 )
 
 func main() {
+	args := os.Args[1]
+
+	switch args {
+	case "checkPosts":
+		fmt.Println("Checking posts")
+		CheckNewPosts()
+	case "delOldPosts":
+		fmt.Println("Deleting old posts")
+		DelOldPosts()
+	}
+}
+
+func CheckNewPosts() {
 	storage, err := db.NewPostStorage()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// posts := scraper.HwrScrapeMoveiPosts()
+	posts := scraper.HwrScrapeMoveiPosts()
 
-	// for _, p := range posts {
-	// 	storage.InsertPost(p)
-	// }
+	for _, p := range posts {
+		post, err := storage.GetPostByTitle(p.Title)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	post, err := storage.GetPost(3)
+		if len(post) == 0 {
+			var id int
+			id, err = storage.InsertPost(p)
+			if err != nil {
+				log.Fatal(err)
+			}
+			fmt.Printf("%d was inserted", id)
+		}
+
+	}
+}
+
+func DelOldPosts() {
+	storage, err := db.NewPostStorage()
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(post)
+
+	posts, err := storage.GetOldPosts()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, p := range posts {
+		storage.DelPost(int64(p.Id))
+		fmt.Printf("Deleted id %d", p.Id)
+	}
 }

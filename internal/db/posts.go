@@ -62,7 +62,7 @@ func (s *PostStorage) InsertPost(post scraper.Post) (int, error) {
 	return int(id), nil
 }
 
-func (s *PostStorage) GetPost(id int) (scraper.Post, error) {
+func (s *PostStorage) GetPostById(id int) (scraper.Post, error) {
 	row := s.db.QueryRow("SELECT * FROM posts WHERE id=?", id)
 
 	post := scraper.Post{}
@@ -83,4 +83,73 @@ func (s *PostStorage) GetPost(id int) (scraper.Post, error) {
 		return scraper.Post{}, err
 	}
 	return post, nil
+}
+
+func (s *PostStorage) GetPostByTitle(title string) ([]scraper.Post, error) {
+	rows, err := s.db.Query("SELECT * FROM posts WHERE title = ?", title)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	data := []scraper.Post{}
+	for rows.Next() {
+		i := scraper.Post{}
+		err = rows.Scan(
+			&i.Id,
+			&i.Title,
+			&i.Image_url,
+			&i.Url,
+			&i.Description,
+			&i.Content,
+			&i.Source,
+			&i.Date,
+		)
+		if err != nil {
+			return nil, err
+		}
+		data = append(data, i)
+	}
+	return data, nil
+}
+
+func (s *PostStorage) GetOldPosts() ([]scraper.Post, error) {
+	rows, err := s.db.Query("SELECT * FROM posts WHERE datetime(date) < datetime('now', '-5 days');")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	data := []scraper.Post{}
+	for rows.Next() {
+		i := scraper.Post{}
+		err = rows.Scan(
+			&i.Id,
+			&i.Title,
+			&i.Image_url,
+			&i.Url,
+			&i.Description,
+			&i.Content,
+			&i.Source,
+			&i.Date,
+		)
+		if err != nil {
+			return nil, err
+		}
+		data = append(data, i)
+	}
+	return data, nil
+}
+
+func (s *PostStorage) DelPost(id int64) (int, error) {
+	res, err := s.db.Exec("delete from sessions where id = ?;", id)
+
+	if err != nil {
+		return 0, err
+	}
+
+	if id, err = res.LastInsertId(); err != nil {
+		return 0, err
+	}
+	return int(id), nil
 }
