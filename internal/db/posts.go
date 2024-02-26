@@ -112,9 +112,9 @@ func (s *PostStorage) GetPostByTitle(title string) ([]scraper.Post, error) {
 	}
 	return data, nil
 }
-
-func (s *PostStorage) GetOldPosts() ([]scraper.Post, error) {
-	rows, err := s.db.Query("SELECT * FROM posts WHERE datetime(date) < datetime('now', '-5 days');")
+func (s *PostStorage) CustomSelect(custom string) ([]scraper.Post, error) {
+	// MUST BE 'SELECT * ...'
+	rows, err := s.db.Query(custom)
 	if err != nil {
 		return nil, err
 	}

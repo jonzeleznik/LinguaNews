@@ -1,7 +1,6 @@
 package scraper
 
 import (
-	"fmt"
 	"log"
 	"strings"
 	"time"
@@ -36,7 +35,6 @@ func HwrScrapeMoveiPosts() []Post {
 			post.Source = p.Source
 			post.Date = p.Date
 
-			fmt.Println(post)
 			hwrMoveiPosts = append(hwrMoveiPosts, post)
 			i++
 		}

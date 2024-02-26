@@ -53,7 +53,7 @@ func DelOldPosts() {
 		log.Fatal(err)
 	}
 
-	posts, err := storage.GetOldPosts()
+	posts, err := storage.CustomSelect("SELECT * FROM posts WHERE datetime(date) < datetime('now', '-5 days');")
 	if err != nil {
 		log.Fatal(err)
 	}
