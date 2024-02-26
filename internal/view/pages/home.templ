@@ -7,7 +7,7 @@ import (
 	"web-scrape/internal/view/components"
 )
 
-templ Home(posts []scraper.HWRPost) {
+templ Home(posts []scraper.Post) {
 	@layout.Base() {
 		<div id="content">
 			for i, item := range posts {
