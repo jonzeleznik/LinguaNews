@@ -3,12 +3,16 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"log"
+	"os"
 	"web-scrape/internal/scraper"
 
+	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const FileDB = "posts.db"
+var fileDB = "posts.db"
+
 const create string = `
 	CREATE TABLE IF NOT EXISTS posts (
 		id INTEGER NOT NULL PRIMARY KEY, 
@@ -26,7 +30,13 @@ type PostStorage struct {
 }
 
 func NewPostStorage() (*PostStorage, error) {
-	db, err := sql.Open("sqlite3", FileDB)
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(".env file could't be loaded! " + err.Error())
+	}
+	fileDB = os.Getenv("DB_PATH")
+
+	db, err := sql.Open("sqlite3", fileDB)
 	if err != nil {
 		return nil, err
 	}

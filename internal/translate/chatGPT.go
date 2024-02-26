@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
-)
+	"os"
 
-const api_token = ""
+	"github.com/joho/godotenv"
+)
 
 type payload struct {
 	Model    string `json:"model"`
@@ -32,6 +34,13 @@ type respone struct {
 }
 
 func ChatGpt(title, description, content string) (respone, error) {
+	var err = godotenv.Load()
+	if err != nil {
+		log.Fatal(".env couldn't be loaded! " + err.Error())
+	}
+
+	api_token := os.Getenv("GPT_KEY")
+
 	var body respone
 	client := &http.Client{}
 
