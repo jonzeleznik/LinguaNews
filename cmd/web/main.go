@@ -22,7 +22,7 @@ func main() {
 		DB: *storage,
 	}
 	app.GET("/home", homeHandler.HandleHomeShow)
-	app.POST("/get-info", homeHandler.HandleButtonClick)
+	app.GET("/get-info", homeHandler.HandleButtonClick)
 
 	app.Start(":3000")
 }

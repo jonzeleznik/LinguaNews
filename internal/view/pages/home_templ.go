@@ -11,7 +11,6 @@ import "io"
 import "bytes"
 
 import (
-	"strconv"
 	"web-scrape/internal/scraper"
 	"web-scrape/internal/view/components"
 	"web-scrape/internal/view/layout"
@@ -40,8 +39,8 @@ func Home(posts []scraper.Post) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for i, item := range posts {
-				templ_7745c5c3_Err = components.Card(item.Title, item.Image_url, item.Url, item.Description, strconv.Itoa(i)).Render(ctx, templ_7745c5c3_Buffer)
+			for _, item := range posts {
+				templ_7745c5c3_Err = components.Card(item).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

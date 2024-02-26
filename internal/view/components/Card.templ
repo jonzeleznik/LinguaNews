@@ -1,27 +1,32 @@
 package components
 
-templ Card(title, image, url, desc, index string) {
+import (
+	"web-scrape/internal/scraper"
+	"strconv"
+)
+
+templ Card(post scraper.Post) {
 	<section
 		class="grid md:grid-cols-3 gap-4 pb-3 mb-3 border-b dark:border-dark-accent"
 	>
 		<div>
 			<img
 				class="object-cover md:h-36 md:w-72"
-				src={ image }
+				src={ post.Image_url }
 				alt="slikca"
 			/>
 		</div>
 		<div class="md:col-span-2">
-			<h2 class="text-xl">{ title }</h2>
+			<h2 class="text-xl">{ post.Title }</h2>
 			<p>
-				{ desc }
+				{ post.Description }
 			</p>
 			<div class="inline-flex">
 				<button
 					type="submit"
 					name="id"
-					value={ index }
-					hx-post="/get-info"
+					value={ strconv.Itoa(post.Id) }
+					hx-get="/get-info"
 					hx-target="#content"
 					hx-swap="outerHTML"
 					class="text-sm font-medium hover:underline text-dark-accent"
@@ -41,7 +46,7 @@ templ Card(title, image, url, desc, index string) {
 					</svg>
 				</button>
 				<a
-					href={ templ.SafeURL(url) }
+					href={ templ.SafeURL(post.Url) }
 					class="text-sm font-medium hover:underline text-dark-accent"
 				>
 					<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
