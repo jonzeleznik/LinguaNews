@@ -18,6 +18,8 @@ func main() {
 	case "delOldPosts":
 		fmt.Println("Deleting old posts")
 		DelOldPosts()
+	case "help":
+		fmt.Println("| checkPosts | delOldPosts |")
 	}
 }
 
