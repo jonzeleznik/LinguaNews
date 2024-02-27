@@ -9,6 +9,8 @@ tasks:
       - go install github.com/a-h/templ/cmd/templ@latest
       - go get github.com/gocolly/colly
       - go get github.com/labstack/echo/v4
+      - go get github.com/mattn/go-sqlite3
+      - go get github.com/joho/godotenv
       - go mod tidy
       - npm install
   assets: 
