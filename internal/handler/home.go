@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"strconv"
 	"web-scrape/internal/db"
 	"web-scrape/internal/translate"
@@ -27,7 +26,6 @@ func (h HomeHandler) HandleHomeShow(c echo.Context) error {
 func (h HomeHandler) HandleButtonClick(c echo.Context) error {
 	// TODO: add translated text to DB
 	id, err := strconv.Atoi(c.QueryParam("id"))
-	fmt.Println(id)
 	if err != nil {
 		return render(c, components.ErrorCard("ERROR accured when translating!", err.Error()))
 	}
@@ -37,10 +35,19 @@ func (h HomeHandler) HandleButtonClick(c echo.Context) error {
 		return render(c, components.ErrorCard("ERROR accured when translating!", err.Error()))
 	}
 
-	translated, err := translate.ChatGpt(post.Title, post.Description, post.Content)
-	if err != nil {
-		return render(c, components.ErrorCard("ERROR accured when translating!", err.Error()))
+	var translated translate.Respone
+	if post.Translated == "" {
+		translated, err = translate.ChatGpt(post.Title, post.Description, post.Content)
+		if err != nil {
+			return render(c, components.ErrorCard("ERROR accured when translating!", err.Error()))
+		}
+
+		post.Translated = translated.Choices[0].Message.Content
+		_, err = h.DB.UpdatePost(post)
+		if err != nil {
+			return render(c, components.ErrorCard("ERROR accured when translating!", err.Error()))
+		}
 	}
 
-	return render(c, components.TextArea(post.Title, translated.Choices[0].Message.Content))
+	return render(c, components.TextArea(post.Title, post.Translated))
 }

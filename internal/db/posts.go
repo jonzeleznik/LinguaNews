@@ -22,7 +22,8 @@ const create string = `
 		description TEXT,
 		content TEXT,
 		source TEXT,
-		date DATETIME
+		date DATETIME,
+		translated TEXT
   );`
 
 type PostStorage struct {
@@ -52,7 +53,7 @@ func NewPostStorage() (*PostStorage, error) {
 
 func (s *PostStorage) InsertPost(post scraper.Post) (int, error) {
 	res, err := s.db.Exec(
-		"INSERT INTO posts VALUES(NULL,?,?,?,?,?,?,?);",
+		"INSERT INTO posts VALUES(NULL,?,?,?,?,?,?,?,?);",
 		post.Title,
 		post.Image_url,
 		post.Url,
@@ -60,6 +61,7 @@ func (s *PostStorage) InsertPost(post scraper.Post) (int, error) {
 		post.Content,
 		post.Source,
 		post.Date,
+		"",
 	)
 	if err != nil {
 		return 0, err
@@ -85,6 +87,7 @@ func (s *PostStorage) GetPostById(id int) (scraper.Post, error) {
 		&post.Content,
 		&post.Source,
 		&post.Date,
+		&post.Translated,
 	)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -114,6 +117,7 @@ func (s *PostStorage) GetPostByTitle(title string) ([]scraper.Post, error) {
 			&i.Content,
 			&i.Source,
 			&i.Date,
+			&i.Translated,
 		)
 		if err != nil {
 			return nil, err
@@ -142,6 +146,7 @@ func (s *PostStorage) CustomSelect(custom string) ([]scraper.Post, error) {
 			&i.Content,
 			&i.Source,
 			&i.Date,
+			&i.Translated,
 		)
 		if err != nil {
 			return nil, err
@@ -149,6 +154,31 @@ func (s *PostStorage) CustomSelect(custom string) ([]scraper.Post, error) {
 		data = append(data, i)
 	}
 	return data, nil
+}
+
+func (s *PostStorage) UpdatePost(post scraper.Post) (int, error) {
+	res, err := s.db.Exec("UPDATE posts SET title = ?, image_url = ?, url = ?, description = ?, content = ?, source = ?, date = ?, translated = ? WHERE id = ?;",
+		post.Title,
+		post.Image_url,
+		post.Url,
+		post.Description,
+		post.Content,
+		post.Source,
+		post.Date,
+		post.Translated,
+		post.Id,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(rowsAffected), nil
 }
 
 func (s *PostStorage) DelPost(id int64) (int, error) {

@@ -11,4 +11,5 @@ type Post struct {
 	Content     string
 	Source      string
 	Date        time.Time
+	Translated  string
 }
