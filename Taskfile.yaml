@@ -17,6 +17,10 @@ tasks:
     desc: Build assets
     cmds:
       - npx tailwindcss -i ./internal/assets/tailwind.css -o ./internal/assets/dist/styles.css
+    sources:
+      - internal/assets/tailwind.css
+    generates:
+      - internal/assets/dist/styles.css
   templ:
     desc: Renders templ files
     cmds:
@@ -33,3 +37,6 @@ tasks:
       - assets
     cmds: 
       - go run ./cmd/web/main.go 
+  build:
+    cmds:
+      - go build -o bin/LinguaNews_{{.CLI_ARGS}} cmd/{{.CLI_ARGS}}/main.go
