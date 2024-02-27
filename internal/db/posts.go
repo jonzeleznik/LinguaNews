@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"web-scrape/internal/scraper"
+
+	"github.com/jonzeleznik/LinguaNews/internal/scraper"
 
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"

@@ -2,8 +2,9 @@ package main
 
 import (
 	"log"
-	"web-scrape/internal/db"
-	"web-scrape/internal/handler"
+
+	"github.com/jonzeleznik/LinguaNews/internal/db"
+	"github.com/jonzeleznik/LinguaNews/internal/handler"
 
 	"github.com/labstack/echo/v4"
 )

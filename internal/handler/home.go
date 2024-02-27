@@ -2,10 +2,11 @@ package handler
 
 import (
 	"strconv"
-	"web-scrape/internal/db"
-	"web-scrape/internal/translate"
-	"web-scrape/internal/view/components"
-	"web-scrape/internal/view/pages"
+
+	"github.com/jonzeleznik/LinguaNews/internal/db"
+	"github.com/jonzeleznik/LinguaNews/internal/translate"
+	"github.com/jonzeleznik/LinguaNews/internal/view/components"
+	"github.com/jonzeleznik/LinguaNews/internal/view/pages"
 
 	"github.com/labstack/echo/v4"
 )

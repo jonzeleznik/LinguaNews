@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"web-scrape/internal/db"
-	"web-scrape/internal/scraper"
+
+	"github.com/jonzeleznik/LinguaNews/internal/db"
+	"github.com/jonzeleznik/LinguaNews/internal/scraper"
 )
 
 func main() {

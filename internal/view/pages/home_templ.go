@@ -11,9 +11,9 @@ import "io"
 import "bytes"
 
 import (
-	"web-scrape/internal/scraper"
-	"web-scrape/internal/view/components"
-	"web-scrape/internal/view/layout"
+	"github.com/jonzeleznik/LinguaNews/internal/scraper"
+	"github.com/jonzeleznik/LinguaNews/internal/view/components"
+	"github.com/jonzeleznik/LinguaNews/internal/view/layout"
 )
 
 func Home(posts []scraper.Post) templ.Component {

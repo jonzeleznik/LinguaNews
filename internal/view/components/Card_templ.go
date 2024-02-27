@@ -11,8 +11,8 @@ import "io"
 import "bytes"
 
 import (
+	"github.com/jonzeleznik/LinguaNews/internal/scraper"
 	"strconv"
-	"web-scrape/internal/scraper"
 )
 
 func Card(post scraper.Post) templ.Component {
