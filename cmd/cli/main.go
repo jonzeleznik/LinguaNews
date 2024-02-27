@@ -18,6 +18,12 @@ func main() {
 	case "delOldPosts":
 		fmt.Println("Deleting old posts")
 		DelOldPosts()
+	case "checkBrokenPosts":
+		fmt.Println("Checking broken posts")
+		CheckBrokenPosts()
+	case "test":
+		fmt.Println("Testing")
+		Test()
 	case "help":
 		fmt.Println("| checkPosts | delOldPosts |")
 	}
@@ -64,4 +70,44 @@ func DelOldPosts() {
 		storage.DelPost(int64(p.Id))
 		fmt.Printf("Deleted id %d", p.Id)
 	}
+}
+
+func CheckBrokenPosts() {
+	storage, err := db.NewPostStorage()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	posts, err := storage.CustomSelect("SELECT * FROM posts WHERE title = '';")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, p := range posts {
+		post := scraper.HwrScrapePostContent(p.Url)
+
+		fmt.Println(post)
+
+		post.Id = p.Id
+		row, err := storage.UpdatePost(post)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("Updated id %d, rows affected %d", p.Id, row)
+	}
+}
+
+func Test() {
+	storage, err := db.NewPostStorage()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	p, err := storage.GetPostById(6)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(p.Translated)
 }
