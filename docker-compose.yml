@@ -1,0 +1,10 @@
+
+services:
+  lingua_news:
+    ports:
+      - 3000:3000
+    image: lingua_news
+    volumes:
+      - ./data:/app/data
+      - ./.env:/app/.env
+    restart: unless-stopped

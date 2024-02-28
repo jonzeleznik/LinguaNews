@@ -1,17 +1,16 @@
 package pages
 
 import (
-	"strconv"
-	"web-scrape/internal/view/layout"
-	"web-scrape/internal/scraper"
-	"web-scrape/internal/view/components"
+	"github.com/jonzeleznik/LinguaNews/internal/view/layout"
+	"github.com/jonzeleznik/LinguaNews/internal/scraper"
+	"github.com/jonzeleznik/LinguaNews/internal/view/components"
 )
 
-templ Home(posts []scraper.HWRPost) {
+templ Home(posts []scraper.Post) {
 	@layout.Base() {
 		<div id="content">
-			for i, item := range posts {
-				@components.Card(item.Title, item.Image_url, item.Url, item.Description, strconv.Itoa(i))
+			for _, item := range posts {
+				@components.Card(item)
 			}
 		</div>
 	}

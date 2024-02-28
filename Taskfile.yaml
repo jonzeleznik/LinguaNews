@@ -9,12 +9,18 @@ tasks:
       - go install github.com/a-h/templ/cmd/templ@latest
       - go get github.com/gocolly/colly
       - go get github.com/labstack/echo/v4
+      - go get github.com/mattn/go-sqlite3
+      - go get github.com/joho/godotenv
       - go mod tidy
       - npm install
   assets: 
     desc: Build assets
     cmds:
       - npx tailwindcss -i ./internal/assets/tailwind.css -o ./internal/assets/dist/styles.css
+    sources:
+      - internal/assets/tailwind.css
+    generates:
+      - internal/assets/dist/styles.css
   templ:
     desc: Renders templ files
     cmds:
@@ -31,3 +37,9 @@ tasks:
       - assets
     cmds: 
       - go run ./cmd/web/main.go 
+  build:
+    deps:
+      - templ
+      - assets
+    cmds:
+      - go build -o bin/LinguaNews_{{.CLI_ARGS}} cmd/{{.CLI_ARGS}}/main.go

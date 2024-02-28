@@ -8,16 +8,8 @@ import (
 	"github.com/gocolly/colly"
 )
 
-type HWRPost struct {
-	Url         string
-	Image_url   string
-	Title       string
-	Description string
-	Content     string
-}
-
-func HwrScrapeMoveiPosts() []HWRPost {
-	var hwrMoveiPosts []HWRPost
+func HwrScrapeMoveiPosts() []Post {
+	var hwrMoveiPosts []Post
 	i := 0
 
 	c := colly.NewCollector()
@@ -27,17 +19,21 @@ func HwrScrapeMoveiPosts() []HWRPost {
 	})
 
 	c.OnHTML("div.story", func(e *colly.HTMLElement) {
-		if i <= 2 {
-			post := HWRPost{}
+		if i <= 4 {
+			post := Post{}
 
 			post.Url = e.ChildAttr("a", "href")
-			post.Title = e.ChildText("h3")
 
 			// To bypass "Too Many Requests" ERROR
-			time.Sleep(1 * time.Second)
-			post.Content,
-				post.Description,
-				post.Image_url = HwrScrapePostContent(post.Url)
+			time.Sleep(2 * time.Second)
+			p := HwrScrapePostContent(post.Url)
+
+			post.Title = p.Title
+			post.Image_url = p.Image_url
+			post.Description = p.Description
+			post.Content = p.Content
+			post.Source = p.Source
+			post.Date = p.Date
 
 			hwrMoveiPosts = append(hwrMoveiPosts, post)
 			i++
@@ -49,10 +45,9 @@ func HwrScrapeMoveiPosts() []HWRPost {
 	return hwrMoveiPosts
 }
 
-func HwrScrapePostContent(target string) (string, string, string) {
+func HwrScrapePostContent(target string) Post {
 	var content []string
-	var description string
-	var image string
+	var post Post
 
 	c := colly.NewCollector()
 
@@ -68,16 +63,21 @@ func HwrScrapePostContent(target string) (string, string, string) {
 	})
 
 	c.OnHTML("p.article-excerpt", func(e *colly.HTMLElement) {
-		description = e.Text
+		post.Description = e.Text
 	})
 
 	c.OnHTML("div.featured-image", func(e *colly.HTMLElement) {
-		image = e.ChildAttr("img", "src")
+		post.Image_url = e.ChildAttr("img", "src")
+	})
+
+	c.OnHTML("h1.article-title", func(e *colly.HTMLElement) {
+		post.Title = e.Text
 	})
 
 	c.Visit(target)
 
-	return strings.Replace(strings.Join(content[:], ""), "\n", "", -1),
-		description,
-		image
+	post.Source = "HWR"
+	post.Date = time.Now()
+	post.Content = strings.Replace(strings.Join(content[:], ""), "\n", "", -1)
+	return post
 }

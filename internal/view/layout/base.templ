@@ -1,21 +1,19 @@
 package layout
 
 import (
-	"web-scrape/internal/view/components"
+	"github.com/jonzeleznik/LinguaNews/internal/view/components"
 )
 
 templ Base() {
-    <!doctype html>
-    <html lang="en">
+	<!DOCTYPE html>
+	<html lang="en">
 		<head>
-			<meta charset="UTF-8" />
-			<meta name="description" content="Astro description" />
-			<meta name="viewport" content="width=device-width" />
-
-			<link rel="icon" type="image/svg+xml" href="dist/favicon.svg" sizes="any" />
-			<link rel="stylesheet" href="dist/styles.css" />
+			<meta charset="UTF-8"/>
+			<meta name="description" content="Astro description"/>
+			<meta name="viewport" content="width=device-width"/>
+			<link rel="icon" type="image/svg+xml" href="dist/favicon.svg" sizes="any"/>
+			<link rel="stylesheet" href="dist/styles.css"/>
 			<script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
-
 			<title>Tutorial</title>
 		</head>
 		<body class="font-sans bg-light-bg dark:bg-dark-bg dark:text-dark-secondary">

@@ -11,7 +11,7 @@ import "io"
 import "bytes"
 
 import (
-	"web-scrape/internal/view/components"
+	"github.com/jonzeleznik/LinguaNews/internal/view/components"
 )
 
 func Base() templ.Component {
