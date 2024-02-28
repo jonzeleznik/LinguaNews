@@ -38,5 +38,8 @@ tasks:
     cmds: 
       - go run ./cmd/web/main.go 
   build:
+    deps:
+      - templ
+      - assets
     cmds:
       - go build -o bin/LinguaNews_{{.CLI_ARGS}} cmd/{{.CLI_ARGS}}/main.go
